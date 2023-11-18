@@ -10,36 +10,31 @@ import {
   ListRenderItemInfo,
 } from "react-native";
 import GoalItem from "./components/GoalItem";
-import { GoalType, goalType } from "./types/GoalType";
+import { GoalType } from "./types/GoalType";
+import GoalInput from "./components/GoalInput";
 
 
 
 export default function App() {
   const [goalInput, setGoalInput] = useState("");
-  const [listOfGoals, setListOfGoals] = useState<goalType[]>([]);
+  const [listOfGoals, setListOfGoals] = useState<GoalType[]>([]);
   function goalInputHandler(enteredText: string) {
     setGoalInput(enteredText);
   }
   function addGoalHandler() {
-    const goalToSave: goalType = { text: goalInput, index: Math.random() };
+    const goalToSave: GoalType = { text: goalInput, index: Math.random() };
     setListOfGoals((currentGoals) => [...currentGoals, goalToSave]);
   }
 
   return (
     <View style={styles.appContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Your course goal!"
-          onChangeText={goalInputHandler}
-        />
-        <Button onPress={addGoalHandler} title="Add Goal" />
-      </View>
+
+      <GoalInput addGoalHandler={addGoalHandler} goalInputHandler={goalInputHandler}/>
 
       <View style={styles.goalsContainer}>
         <FlatList
           data={listOfGoals}
-          renderItem={(item : ListRenderItemInfo<goalType>) => {
+          renderItem={(item : ListRenderItemInfo<GoalType>) => {
             const goalToSend : GoalType = item.item;
             return (
               <GoalItem item={item.item} />
