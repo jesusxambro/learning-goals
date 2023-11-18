@@ -18,18 +18,19 @@ import GoalInput from "./components/GoalInput";
 export default function App() {
   const [goalInput, setGoalInput] = useState("");
   const [listOfGoals, setListOfGoals] = useState<GoalType[]>([]);
-  function goalInputHandler(enteredText: string) {
-    setGoalInput(enteredText);
-  }
-  function addGoalHandler() {
-    const goalToSave: GoalType = { text: goalInput, index: Math.random() };
+
+  function addGoalHandler(passedGoalToSave: string) {
+    const goalToSave: GoalType = {
+      text: passedGoalToSave,
+      index: Math.random(),
+    };
     setListOfGoals((currentGoals) => [...currentGoals, goalToSave]);
   }
 
   return (
     <View style={styles.appContainer}>
 
-      <GoalInput addGoalHandler={addGoalHandler} goalInputHandler={goalInputHandler}/>
+      <GoalInput addGoalHandler={addGoalHandler}/>
 
       <View style={styles.goalsContainer}>
         <FlatList
