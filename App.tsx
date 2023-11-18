@@ -16,14 +16,17 @@ import GoalInput from "./components/GoalInput";
 
 
 export default function App() {
-  const [goalInput, setGoalInput] = useState("");
   const [listOfGoals, setListOfGoals] = useState<GoalType[]>([]);
 
-  function addGoalHandler(passedGoalToSave: string) {
+  function addGoalHandler(
+    passedGoalToSave: string,
+    clearGoalInput: React.Dispatch<React.SetStateAction<string>>
+  ) {
     const goalToSave: GoalType = {
       text: passedGoalToSave,
       index: Math.random(),
     };
+    clearGoalInput("");
     setListOfGoals((currentGoals) => [...currentGoals, goalToSave]);
   }
 

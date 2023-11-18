@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { View, TextInput, Button, StyleSheet } from "react-native";
 
 interface GoalInputProps {
-  addGoalHandler: (passedGoalToSave: string) => void;
+  addGoalHandler: (
+    passedGoalToSave: string,
+    clearGoalInput: Dispatch<SetStateAction<string>>
+  ) => void;
 }
 
 function GoalInput({ addGoalHandler }: GoalInputProps) {
@@ -17,8 +20,9 @@ function GoalInput({ addGoalHandler }: GoalInputProps) {
         style={styles.textInput}
         placeholder="Your course goal!"
         onChangeText={goalInputHandler}
+        value={goalInput}
       />
-      <Button onPress={() => {addGoalHandler(goalInput)}} title="Add Goal" />
+      <Button onPress={() => {addGoalHandler(goalInput, setGoalInput)}} title="Add Goal" />
     </View>
   );
 }
