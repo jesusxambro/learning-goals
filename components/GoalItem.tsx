@@ -1,16 +1,39 @@
 import React from "react";
-import { View, StyleSheet, ListRenderItemInfo, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ListRenderItemInfo,
+  Text,
+  Pressable,
+  Alert,
+} from "react-native";
 import { GoalType } from "../types/GoalType";
 
-interface goalItemInterface{
-    item: GoalType;
+interface goalItemInterface {
+  item: GoalType;
+  deleteGoal: (indexToDelete: number) => void;
 }
 
-function GoalItem({item}: goalItemInterface) {
+function GoalItem({ item, deleteGoal }: goalItemInterface) {
   return (
-    <View style={goalItemStyles.listGoals}>
-      <Text style={goalItemStyles.goalText}>{item.text}</Text>
-    </View>
+    <Pressable onPress={() => {
+      Alert.alert('Goal', 'Goal Details..', [
+        {
+          text: 'Delete',
+          onPress: () => deleteGoal(item.index),
+        },
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]);
+    }} >
+      <View style={goalItemStyles.listGoals}>
+        <Text style={goalItemStyles.goalText}>{item.text}</Text>
+      </View>
+    </Pressable>
   );
 }
 

@@ -13,8 +13,6 @@ import GoalItem from "./components/GoalItem";
 import { GoalType } from "./types/GoalType";
 import GoalInput from "./components/GoalInput";
 
-
-
 export default function App() {
   const [listOfGoals, setListOfGoals] = useState<GoalType[]>([]);
 
@@ -30,19 +28,26 @@ export default function App() {
     setListOfGoals((currentGoals) => [...currentGoals, goalToSave]);
   }
 
+  const deleteGoal = (indexToDelete: number) => {
+    const currentListofGoals: GoalType[] = [];
+    listOfGoals.map((goal) => {
+      currentListofGoals.push(goal);
+    });
+    if (indexToDelete > -1) {
+      currentListofGoals.splice(indexToDelete, 1);
+    }
+    setListOfGoals(currentListofGoals);
+  };
+
   return (
     <View style={styles.appContainer}>
-
-      <GoalInput addGoalHandler={addGoalHandler}/>
+      <GoalInput addGoalHandler={addGoalHandler} />
 
       <View style={styles.goalsContainer}>
         <FlatList
           data={listOfGoals}
-          renderItem={(item : ListRenderItemInfo<GoalType>) => {
-            const goalToSend : GoalType = item.item;
-            return (
-              <GoalItem item={item.item} />
-            );
+          renderItem={(item: ListRenderItemInfo<GoalType>) => {
+            return <GoalItem item={item.item} deleteGoal={deleteGoal}/>;
           }}
         />
       </View>
@@ -74,5 +79,5 @@ const styles = StyleSheet.create({
   },
   goalsContainer: {
     flex: 5,
-  }
+  },
 });
