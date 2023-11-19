@@ -17,10 +17,12 @@ interface goalItemInterface {
 function GoalItem({ item, deleteGoal }: goalItemInterface) {
   return (
     <Pressable onPress={() => {
-      Alert.alert('Goal', 'Goal Details..', [
+      Alert.alert(`Goal: ${item.text}`, 'Goal Details..', [
         {
-          text: 'Delete',
+          text: 'Delete', 
+          // found a big bug, it deletes the wrong one... 
           onPress: () => deleteGoal(item.index),
+          style:'destructive'
         },
         {
           text: 'Cancel',
