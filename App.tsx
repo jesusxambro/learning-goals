@@ -29,14 +29,9 @@ export default function App() {
   }
 
   const deleteGoal = (indexToDelete: number) => {
-    const currentListofGoals: GoalType[] = [];
-    listOfGoals.map((goal) => {
-      currentListofGoals.push(goal);
+    setListOfGoals(listOfGoals => {
+      return listOfGoals.filter((goal) => goal.index !== indexToDelete);
     });
-    if (indexToDelete > -1) {
-      currentListofGoals.splice(indexToDelete, 1);
-    }
-    setListOfGoals(currentListofGoals);
   };
 
   return (
