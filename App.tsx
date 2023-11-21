@@ -15,6 +15,7 @@ import GoalInput from "./components/GoalInput";
 
 export default function App() {
   const [listOfGoals, setListOfGoals] = useState<GoalType[]>([]);
+  const [isGoalModalOpen, setIsGoalModalOpen] = useState(false);
 
   function addGoalHandler(
     passedGoalToSave: string,
@@ -26,23 +27,34 @@ export default function App() {
     };
     clearGoalInput("");
     setListOfGoals((currentGoals) => [...currentGoals, goalToSave]);
+    setIsGoalModalOpen(false)
   }
 
   const deleteGoal = (indexToDelete: number) => {
-    setListOfGoals(listOfGoals => {
+    setListOfGoals((listOfGoals) => {
       return listOfGoals.filter((goal) => goal.index !== indexToDelete);
     });
   };
 
   return (
     <View style={styles.appContainer}>
-      <GoalInput addGoalHandler={addGoalHandler} />
+      <Button
+        title="Add Goal"
+        onPress={() => setIsGoalModalOpen(!isGoalModalOpen)}
+      />
+      {isGoalModalOpen && (
+        <GoalInput
+          visible={isGoalModalOpen}
+          setGoalInputModal={setIsGoalModalOpen}
+          addGoalHandler={addGoalHandler}
+        />
+      )}
 
       <View style={styles.goalsContainer}>
         <FlatList
           data={listOfGoals}
           renderItem={(item: ListRenderItemInfo<GoalType>) => {
-            return <GoalItem item={item.item} deleteGoal={deleteGoal}/>;
+            return <GoalItem item={item.item} deleteGoal={deleteGoal} />;
           }}
         />
       </View>

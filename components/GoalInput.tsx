@@ -1,29 +1,60 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
-import { View, TextInput, Button, StyleSheet } from "react-native";
+import {
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  Modal,
+  Image,
+} from "react-native";
 
 interface GoalInputProps {
   addGoalHandler: (
     passedGoalToSave: string,
     clearGoalInput: Dispatch<SetStateAction<string>>
   ) => void;
+  visible: boolean;
+  setGoalInputModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function GoalInput({ addGoalHandler }: GoalInputProps) {
+function GoalInput({
+  addGoalHandler,
+  visible,
+  setGoalInputModal,
+}: GoalInputProps) {
   const [goalInput, setGoalInput] = useState("");
   function goalInputHandler(enteredText: string) {
     setGoalInput(enteredText);
   }
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Your course goal!"
-        onChangeText={goalInputHandler}
-        value={goalInput}
-      />
-      <Button onPress={() => {addGoalHandler(goalInput, setGoalInput)}} title="Add Goal" />
-    </View>
+    <Modal visible={visible} animationType="fade">
+      <View style={styles.inputContainer}>
+        <Image
+          style={styles.imageStyle}
+          source={require("../assets/goal.png")}
+        />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Your course goal!"
+          onChangeText={goalInputHandler}
+          value={goalInput}
+        />
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Button
+              onPress={() => {
+                addGoalHandler(goalInput, setGoalInput);
+              }}
+              title="Add Goal"
+            />
+          </View>
+          <View style={styles.button}>
+            <Button title="Cancel" onPress={() => setGoalInputModal(false)} />
+          </View>
+        </View>
+      </View>
+    </Modal>
   );
 }
 
@@ -37,21 +68,33 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
-    marginBottom: 24,
-    borderBottomWidth: 1,
-    borderBottomColor: "#cccc",
+    backgroundColor: "#311b6b",
+    padding:16,
   },
   textInput: {
     borderWidth: 1,
     borderColor: "#cccc",
-    width: "70%",
-    marginRight: 8,
+    width: "100%",
     padding: 8,
+    backgroundColor: "white",
   },
   goalsContainer: {
     flex: 5,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 16,
+  },
+  button: {
+    width: "30%",
+    marginHorizontal: 8,
+  },
+  imageStyle: {
+    width: 100,
+    height:100,
+    margin:20,
   },
 });
