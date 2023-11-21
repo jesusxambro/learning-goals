@@ -12,6 +12,7 @@ import {
 import GoalItem from "./components/GoalItem";
 import { GoalType } from "./types/GoalType";
 import GoalInput from "./components/GoalInput";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
   const [listOfGoals, setListOfGoals] = useState<GoalType[]>([]);
@@ -27,7 +28,7 @@ export default function App() {
     };
     clearGoalInput("");
     setListOfGoals((currentGoals) => [...currentGoals, goalToSave]);
-    setIsGoalModalOpen(false)
+    setIsGoalModalOpen(false);
   }
 
   const deleteGoal = (indexToDelete: number) => {
@@ -37,28 +38,35 @@ export default function App() {
   };
 
   return (
-    <View style={styles.appContainer}>
-      <Button
-        title="Add Goal"
-        onPress={() => setIsGoalModalOpen(!isGoalModalOpen)}
-      />
-      {isGoalModalOpen && (
-        <GoalInput
-          visible={isGoalModalOpen}
-          setGoalInputModal={setIsGoalModalOpen}
-          addGoalHandler={addGoalHandler}
-        />
-      )}
+    <>
+      <StatusBar style="light"/>
 
-      <View style={styles.goalsContainer}>
-        <FlatList
-          data={listOfGoals}
-          renderItem={(item: ListRenderItemInfo<GoalType>) => {
-            return <GoalItem item={item.item} deleteGoal={deleteGoal} />;
-          }}
-        />
+      <View style={styles.appContainer}>
+        <View style={styles.buttonContainer}>
+          <Button
+            title="Add Goal"
+            onPress={() => setIsGoalModalOpen(!isGoalModalOpen)}
+            color={"#8566d4"}
+          />
+        </View>
+        {isGoalModalOpen && (
+          <GoalInput
+            visible={isGoalModalOpen}
+            setGoalInputModal={setIsGoalModalOpen}
+            addGoalHandler={addGoalHandler}
+          />
+        )}
+
+        <View style={styles.goalsContainer}>
+          <FlatList
+            data={listOfGoals}
+            renderItem={(item: ListRenderItemInfo<GoalType>) => {
+              return <GoalItem item={item.item} deleteGoal={deleteGoal} />;
+            }}
+          />
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
@@ -67,6 +75,8 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 50,
     paddingHorizontal: 16,
+    paddingTop: 50,
+    backgroundColor: "#1e085a",
   },
   inputContainer: {
     flex: 1,
@@ -86,5 +96,8 @@ const styles = StyleSheet.create({
   },
   goalsContainer: {
     flex: 5,
+  },
+  buttonContainer: {
+    paddingBottom: 5,
   },
 });

@@ -47,10 +47,15 @@ function GoalInput({
                 addGoalHandler(goalInput, setGoalInput);
               }}
               title="Add Goal"
+              color={"#884fd2"}
             />
           </View>
           <View style={styles.button}>
-            <Button title="Cancel" onPress={() => setGoalInputModal(false)} />
+            <Button
+              title="Cancel"
+              color={"#f31282"}
+              onPress={() => setGoalInputModal(false)}
+            />
           </View>
         </View>
       </View>
@@ -71,20 +76,22 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#311b6b",
-    padding:16,
+    padding: 16,
   },
   textInput: {
     borderWidth: 1,
-    borderColor: "#cccc",
+    borderColor: "#e4f0ff",
     width: "100%",
-    padding: 8,
-    backgroundColor: "white",
+    color:'#120438',
+    padding: 16,
+    borderRadius:6,
+    backgroundColor: "#e4f0ff",
   },
   goalsContainer: {
     flex: 5,
   },
   buttonContainer: {
-    flexDirection: "row",
+    flexDirection: "row-reverse",
     justifyContent: "space-between",
     marginTop: 16,
   },
@@ -94,7 +101,7 @@ const styles = StyleSheet.create({
   },
   imageStyle: {
     width: 100,
-    height:100,
-    margin:20,
+    height: 100,
+    margin: 20,
   },
 });
